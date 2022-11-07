@@ -25,7 +25,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async(req
 	const interaction = req.body;
 	
 	if (interaction.type === InteractionType.ApplicationCommand) {
-		const command = client.commands.get(interaction.data.name);
+		const command = interaction.data.name.toLowerCase();
 		if (!command) return;
 		
 		try {
