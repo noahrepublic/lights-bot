@@ -44,4 +44,6 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 
+console.log(process.env.token)
+
 client.login(process.env.token);
