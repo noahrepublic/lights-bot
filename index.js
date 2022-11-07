@@ -3,6 +3,8 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 require('dotenv').config();
 
+console.log(process.env.token)
+
 const client = new Client({ 
     intents: [
         GatewayIntentBits.Guilds,
@@ -42,8 +44,5 @@ client.on(Events.InteractionCreate, async interaction => {
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
-
-
-console.log(process.env.token)
 
 client.login(process.env.token);
