@@ -23,10 +23,10 @@ module.exports = {
         await interaction.deferReply();
 		axios.post(`http://${process.env.ipAddress}:80/${interaction.options.getInteger('hue')}/${interaction.options.getInteger('saturation')}/${interaction.options.getInteger('brightness')}`)
             .then(res => {
-                interaction.reply(`Success!`);
+                interaction.editReply(`Success!`);
             })
             .catch(err => {
-                interaction.reply(`You can only send requests every 15 seconds!`);
+                interaction.editReply(`You can only send requests every 15 seconds!`);
             })
 	},
 };
