@@ -1,14 +1,14 @@
 
 const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
-import { ipAddress } from '.env';
+require('dotenv').config();
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('off')
 		.setDescription('Turns off the lights!'),
 	async execute(interaction) {
-		axios.post(`http://${ipAddress}:80/off`)
+		axios.post(`http://${process.env.ipAddress}:80/off`)
             .then(res => {
                 interaction.reply(`Success!`);
             })

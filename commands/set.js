@@ -1,7 +1,7 @@
 
 const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
-import { ipAddress } from '.env';
+require('dotenv').config();
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -20,7 +20,7 @@ module.exports = {
                 .setDescription('The saturation of the lights')
                 .setRequired(true)),
 	async execute(interaction) {
-		axios.post(`http://${ipAddress}:80/${interaction.options.getInteger('hue')}/${interaction.options.getInteger('saturation')}/${interaction.options.getInteger('brightness')}`)
+		axios.post(`http://${process.env.ipAddress}:80/${interaction.options.getInteger('hue')}/${interaction.options.getInteger('saturation')}/${interaction.options.getInteger('brightness')}`)
             .then(res => {
                 interaction.reply(`Success!`);
             })

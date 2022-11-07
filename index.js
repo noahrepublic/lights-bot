@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
-import { token } from '.env';
+require('dotenv').config();
 
 const client = new Client({ 
     intents: [
@@ -42,4 +42,5 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 });
 
-client.login(token);
+
+client.login(process.env.token);
