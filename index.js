@@ -24,6 +24,7 @@ for (const file of commandFiles) {
 
 client.once(Events.ClientReady, () => {
 	console.log('Ready!');
+	client.user.setStatus('online');
     client.user.setActivity('the lights!', { type: ActivityType.Watching });
 });
 

@@ -8,6 +8,7 @@ module.exports = {
 		.setName('off')
 		.setDescription('Turns off the lights!'),
 	async execute(interaction) {
+        await interaction.deferReply();
 		axios.post(`http://${process.env.ipAddress}:80/off`)
             .then(res => {
                 interaction.reply(`Success!`);

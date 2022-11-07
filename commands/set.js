@@ -20,6 +20,7 @@ module.exports = {
                 .setDescription('The saturation of the lights')
                 .setRequired(true)),
 	async execute(interaction) {
+        await interaction.deferReply();
 		axios.post(`http://${process.env.ipAddress}:80/${interaction.options.getInteger('hue')}/${interaction.options.getInteger('saturation')}/${interaction.options.getInteger('brightness')}`)
             .then(res => {
                 interaction.reply(`Success!`);
