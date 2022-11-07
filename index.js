@@ -1,13 +1,11 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const axios = require('axios');
 const express = require('express');
 const app = express();
 require('dotenv').config();
 
-const { InteractionType, InteractionResponseType, verifyKeyMiddleware } = require('discord-api-types/v9');
-const { verify } = require('node:crypto');
+const { InteractionType, InteractionResponseType, verifyKeyMiddleware } = require('discord-interactions');
 
 const discord_api = axios.create({
 	baseURL: 'https://discord.com/api/',
@@ -20,21 +18,8 @@ const discord_api = axios.create({
 	}
 });
 
-client.commands = new Collection();
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-	const filePath = path.join(commandsPath, file);
-	const command = require(filePath);
-	client.commands.set(command.data.name, command);
-}
 
-client.once(Events.ClientReady, () => {
-	console.log('Ready!');
-	client.user.setStatus('online');
-    client.user.setActivity('the lights!', { type: ActivityType.Watching });
-});
 
 app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async(req, res) => {
 	const interaction = req.body;
@@ -73,7 +58,7 @@ const rest = new REST({ version: '10' }).setToken(token);
 
 		// The put method is used to fully refresh all commands in the guild with the current set
 		const data = await rest.put(
-			Routes.applicationGuildCommands(clientId, "975504794099798087"),
+			Routes.applicationGuildCommands(clientId, process.env.GUILD_ID),
 			{ body: commands },
 		);
 
