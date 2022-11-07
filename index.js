@@ -1,6 +1,5 @@
 const { REST, Routes } = require('discord.js');
 const fs = require('node:fs');
-const path = require('node:path');
 const axios = require('axios');
 const express = require('express');
 const app = express();
@@ -20,17 +19,14 @@ const discord_api = axios.create({
 });
 
 
-
-
 app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async(req, res) => {
 	const interaction = req.body;
 	
 	if (interaction.type === InteractionType.ApplicationCommand) {
-		const command = interaction.data.name.toLowerCase();
 		if (!command) return;
 		
 		try {
-			await command.execute(interaction);
+			await command.execute(interaction.data.name);
 		} catch (error) {
 			console.error(error);
 			await interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });
