@@ -55,7 +55,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     }
 
     if(interaction.data.name == 'set'){
-      console.log(interaction.data.options.brightness.value)
+      console.log(interaction.data.options.find(option => option.name === 'hue').value)
 		  axios.post(`http://${process.env.ipAddress}:80/${interaction.data.options.hue.value}/${interaction.data.options.saturation.value}/${interaction.data.options.brightness.value}`)
             .then(res => {
                 res.send({
