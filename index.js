@@ -55,8 +55,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     }
 
     if(interaction.data.name == 'set'){
-      console.log(interaction.data.options.find(option => option.name === 'hue').value)
-		  axios.post(`http://${process.env.ipAddress}:80/${interaction.data.options.hue.value}/${interaction.data.options.saturation.value}/${interaction.data.options.brightness.value}`)
+		  axios.post(`http://${process.env.ipAddress}:80/${interaction.data.options.find(option => option.name === 'hue').value}/${interaction.data.options.find(option => option.name === 'saturation').value}/${interaction.data.options.find(option => option.name === 'brightness').value}`)
             .then(res => {
                 res.send({
                   type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -97,15 +96,15 @@ app.get('/register_commands', async (req,res) =>{
 			"type": 4,
 			"required": true
 		},
-    {
-			"name": "brightness",
-			"description": "The brightness of the lights (1-254)",
-			"type": 4,
-			"required": true
-		},
 		{
 			"name": "saturation",
 			"description": "The saturation of the lights (0-254) (0 is white)",
+			"type": 4,
+			"required": true
+		},
+    {
+			"name": "brightness",
+			"description": "The brightness of the lights (1-254)",
 			"type": 4,
 			"required": true
 		}
