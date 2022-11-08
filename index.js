@@ -34,7 +34,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     console.log(interaction.data.name)
     if(interaction.data.name == 'off'){
-		  axios.post(`http://${process.env.ipAddress}:80/off`)
+		  axios.post(`https://${process.env.ipAddress}:80/off`)
             .then(r => {
               res.send({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -55,7 +55,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     }
 
     if(interaction.data.name == 'set'){
-		  axios.post(`http://${process.env.ipAddress}:80/${interaction.data.options.find(option => option.name === 'hue').value}/${interaction.data.options.find(option => option.name === 'saturation').value}/${interaction.data.options.find(option => option.name === 'brightness').value}`)
+		  axios.post(`https://${process.env.ipAddress}:80/${interaction.data.options.find(option => option.name === 'hue').value}/${interaction.data.options.find(option => option.name === 'saturation').value}/${interaction.data.options.find(option => option.name === 'brightness').value}`)
             .then(r => {
                 res.send({
                   type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
