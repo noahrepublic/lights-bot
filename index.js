@@ -34,21 +34,18 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     console.log(interaction.data.name)
     if(interaction.data.name == 'off'){
-      res.send({
-			  type: InteractionResponseType.deferReply,
-		  });
 		  axios.post(`http://${process.env.ipAddress}:80/off`)
             .then(r => {
               res.send({
-                type: InteractionResponseType.editReply,
+                type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
-                  content: 'Turned off light!'
+                  content: 'Turned off the lights!'
                 }
               });
             })
             .catch(err => {
                 res.send({
-                  type: InteractionResponseType.editReply,
+                  type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                   data: {
                     content: 'You can only send requests every 15 seconds!'
                   }
@@ -58,13 +55,10 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     }
 
     if(interaction.data.name == 'set'){
-		  res.send({
-			  type: InteractionResponseType.deferReply,
-		  });
 		  axios.post(`http://${process.env.ipAddress}:80/${interaction.options.getInteger('hue')}/${interaction.options.getInteger('saturation')}/${interaction.options.getInteger('brightness')}`)
             .then(res => {
                 res.send({
-                  type: InteractionResponseType.editReply,
+                  type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                   data: {
                     content: 'Success!'
                   }
@@ -72,7 +66,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
             })
             .catch(err => {
                 res.send({
-                  type: InteractionResponseType.editReply,
+                  type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                   data: {
                     content: 'You can only send requests every 15 seconds!'
                   }
