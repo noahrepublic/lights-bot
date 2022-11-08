@@ -68,7 +68,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
                 res.send({
                   type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                   data: {
-                    content: err.message
+                    content: 'You can only send requests every 15 seconds!'
                   }
                 });
             })
