@@ -55,8 +55,8 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     }
 
     if(interaction.data.name == 'set'){
-      console.log(interaction.data.options)
-		  axios.post(`http://${process.env.ipAddress}:80/${interaction.options.getInteger('hue')}/${interaction.options.getInteger('saturation')}/${interaction.options.getInteger('brightness')}`)
+      console.log(interaction.data.options.brightness.value)
+		  axios.post(`http://${process.env.ipAddress}:80/${interaction.data.options.hue.value}/${interaction.data.options.saturation.value}/${interaction.data.options.brightness.value}`)
             .then(res => {
                 res.send({
                   type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -92,20 +92,20 @@ app.get('/register_commands', async (req,res) =>{
       "description": "Sets the lights colors!",
       "options": [
 		{
-			"name": "brightness",
-			"description": "The brightness of the lights",
+			"name": "hue",
+			"description": "The hue of the lights (1-65535)",
 			"type": 4,
 			"required": true
 		},
-		{
-			"name": "hue",
-			"description": "The hue of the lights",
+    {
+			"name": "brightness",
+			"description": "The brightness of the lights (1-254)",
 			"type": 4,
 			"required": true
 		},
 		{
 			"name": "saturation",
-			"description": "The saturation of the lights",
+			"description": "The saturation of the lights (0-254) (0 is white)",
 			"type": 4,
 			"required": true
 		}
