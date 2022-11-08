@@ -39,7 +39,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
               res.send({
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
-                  content: r.message
+                  content: 'Turning off the lights'
                 }
               });
             })
@@ -60,7 +60,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
                 res.send({
                   type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                   data: {
-                    content: r.message
+                    content: "Sucessfully set the light to the specified color!"
                   }
                 });
             })
