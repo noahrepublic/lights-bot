@@ -34,25 +34,49 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     console.log(interaction.data.name)
     if(interaction.data.name == 'off'){
-		await interaction.deferReply();
-		axios.post(`http://${process.env.ipAddress}:80/off`)
-            .then(res => {
-                interaction.editReply(`Success!`);
+      res.send({
+			  type: InteractionResponseType.deferReply,
+		  });
+		  axios.post(`http://${process.env.ipAddress}:80/off`)
+            .then(r => {
+              res.send({
+                type: InteractionResponseType.editReply,
+                data: {
+                  content: 'Turned off light!'
+                }
+              });
             })
             .catch(err => {
-                interaction.editReply(`You can only send requests every 15 seconds!`);
+                res.send({
+                  type: InteractionResponseType.editReply,
+                  data: {
+                    content: 'You can only send requests every 15 seconds!'
+                  }
+                });
             })
 
     }
 
-    if(interaction.data.name == 'dm'){
-		await interaction.deferReply();
-		axios.post(`http://${process.env.ipAddress}:80/${interaction.options.getInteger('hue')}/${interaction.options.getInteger('saturation')}/${interaction.options.getInteger('brightness')}`)
+    if(interaction.data.name == 'set'){
+		  res.send({
+			  type: InteractionResponseType.deferReply,
+		  });
+		  axios.post(`http://${process.env.ipAddress}:80/${interaction.options.getInteger('hue')}/${interaction.options.getInteger('saturation')}/${interaction.options.getInteger('brightness')}`)
             .then(res => {
-                interaction.editReply(`Success!`);
+                res.send({
+                  type: InteractionResponseType.editReply,
+                  data: {
+                    content: 'Success!'
+                  }
+                });
             })
             .catch(err => {
-                interaction.editReply(`You can only send requests every 15 seconds!`);
+                res.send({
+                  type: InteractionResponseType.editReply,
+                  data: {
+                    content: 'You can only send requests every 15 seconds!'
+                  }
+                });
             })
     }
   }
