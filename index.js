@@ -87,9 +87,9 @@ app.post("/interactions", verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     }
 
     if (interaction.data.name == "sus") {
-      axios
-        .post(`http://${process.env.ipAddress}:80/65535/254/254`)
+      axios.post(`http://${process.env.ipAddress}:80/65535/254/254`)
         .then((r) => {
+          console.log(r);
           res.send({
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
