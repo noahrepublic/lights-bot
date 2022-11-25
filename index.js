@@ -140,6 +140,11 @@ app.get("/register_commands", async (req, res) => {
         },
       ],
     },
+    {
+      name: "sus",
+      description: "Makes light a little bit sus...",
+      options: [],
+    },
   ];
   try {
     // api docs - https://discord.com/developers/docs/interactions/application-commands#create-global-application-command
